@@ -1,0 +1,37 @@
+version: '3.8'  # Updated to a modern version
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.0  # Specific version for stability
+    container_name: zookeeper  # Named for easier management
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181  # Explicit client port
+      ZOOKEEPER_TICK_TIME: 2000   # Default tick time
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0  # Matching Zookeeper version
+    container_name: kafka  # Named for easier management
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1  # Unique broker ID
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Link to Zookeeper service
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT  # Explicit protocol
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092  # External access
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1  # Single node setup
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1  # Single node
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1  # Single node
+
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0.9-ubi8  # Latest MongoDB with ARM support
+    container_name: mongodb  # Named for easier management
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db  # Persist data
+
+volumes:
+  mongodb_data:  # Named volume for MongoDB persistence
