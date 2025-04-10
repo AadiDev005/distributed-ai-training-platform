@@ -1,6 +1,7 @@
 
 # Distributed AI Training Platform
 
+
 ## Overview
 The Distributed AI Training Platform is a scalable, cloud-native system for training AI models across multiple worker nodes, orchestrated by a master node. It leverages Kubernetes on Amazon EKS, Amazon DocumentDB for data storage, Amazon S3 for model storage, Apache Kafka for message passing, and Spring Boot for the application framework.
 
@@ -9,10 +10,13 @@ The Distributed AI Training Platform is a scalable, cloud-native system for trai
 - **Reliability**: Ensures high availability using Kubernetes deployments.
 - **Security**: Connects securely to AWS services using SSL/TLS and IAM roles.
 - **Monitoring**: Provides health checks via Spring Boot Actuator.
+  
+<img width="1155" alt="Screenshot 2025-04-10 at 6 12 50 PM" src="https://github.com/user-attachments/assets/6c565b23-74df-4f95-be76-1d5d15d7aee5" />
 
 ---
 
 ## Architecture
+
 
 ### Components
 - **Master Service**: Orchestrates training, communicates via Kafka, stores metadata in DocumentDB, and uploads models to S3.
